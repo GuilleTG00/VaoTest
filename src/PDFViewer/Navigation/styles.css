@@ -1,0 +1,29 @@
+.navbarIcons {
+    color: blue;
+    cursor: pointer
+}
+
+.navButtonContainer {
+    display: inline-block;
+    margin-left: 10;
+}
+
+.pageCountText {
+    display: inline-block;
+    color: blue;
+    font-size: 15;
+    margin-top: 0;
+}
+
+.zoomButtonContainer {
+    display: inline-block;
+}
+
+.containerNavbar {
+    align-items: stretch;
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    background-color: white;
+  }
+  
