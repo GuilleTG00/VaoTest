@@ -19,7 +19,6 @@ const TestCase = () => {
 
     // Reference to modify the PDF width Value to its container.
     const refPDFContainer = useRef(0)
-    const widthValue = refPDFContainer.current.clientWidth;
 
     console.log("LETS VALIDATE", refPDFContainer);
 
@@ -55,16 +54,16 @@ const TestCase = () => {
         if (!_.isNil(widthValue)) {
             setWidth(widthValue);
         }
-    })
+    }, [])
     
     return (
         <div>
-                <Grid
-                    item
-                    className="pdfContainer"
-                    sm={12} md={12} xs={12}
-                >
-                    <div ref={refPDFContainer}>
+            <Grid
+                item
+                className="pdfContainer"
+                sm={12} md={12} xs={12}
+            >
+                <div ref={refPDFContainer}>
                     <Document
                         className="canvasCss"
                         file={PDF}
@@ -82,23 +81,23 @@ const TestCase = () => {
                             width={width}
                         />
                     </Document>
-                    </div>
-                </Grid>
+                </div>
+            </Grid>
             {totalPages && (
                 <Grid
                     item
                     className="containerNavbar"
                     sm={12} md={12} xs={12}
                 >
-                <CustomNavigation
-                    currentPage={currentPage}
-                    maxScale={VIEWER_MAX_SCALE}
-                    minScale={VIEWER_MIN_SCALE}
-                    scale={scale}
-                    setCurrentPage={setCurrentPage}
-                    setScale={setScale}
-                    totalPages={totalPages}
-                />
+                    <CustomNavigation
+                        currentPage={currentPage}
+                        maxScale={VIEWER_MAX_SCALE}
+                        minScale={VIEWER_MIN_SCALE}
+                        scale={scale}
+                        setCurrentPage={setCurrentPage}
+                        setScale={setScale}
+                        totalPages={totalPages}
+                    />
                 </Grid>
             )}
         </div>

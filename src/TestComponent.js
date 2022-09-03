@@ -16,8 +16,8 @@ import Link from '@mui/material/Link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import MainPDF from './PDFViewer/MainPDF';
 import SecondTest from './PDFViewer/SecondTest';
+import JSONData from './JSONViewer/JSONData';
 
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -103,32 +103,31 @@ const TestComponent = () => {
           </Container>
         </Box>
         { /* We define a maxWidth of XL size, so it can fit the entire screen. */}
-        <Container maxWidth="80%">
+        <Container maxWidth="90%">
           {/* End hero unit */}
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{ 
+                    height: '100%', 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    backgroundColor: "grey"
+                  }}
                 >
-                    {/*<MainPDF />*/}
                     <SecondTest />
-                    
-                    <CardMedia
-                        component="img"
-                        image="https://source.unsplash.com/random"
-                        alt="random"
-                    />
                 </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
                 <Card
-                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                    sx={{ 
+                      padding: '0%', 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      justifyContent: "flex-start"
+                    }}
                 >
-                    <CardMedia
-                        component="img"
-                        image="https://source.unsplash.com/random"
-                        alt="random"
-                    />
+                    <JSONData/>
                 </Card>
             </Grid>
           <Grid item xs={12} sm={6} md={4}>
