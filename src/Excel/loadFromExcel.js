@@ -7,11 +7,9 @@ const readExcelFile = async () => {
         .then(resp => resp.arrayBuffer())
         .then(buffer => read(buffer))
         .catch(err => console.error(err))
-
+        console.log("testing", parseWorkBook(workBook))
     return parseWorkBook(workBook);
 }
-
-export default readExcelFile;
 
 const parseWorkBook = (excelElements) => {
     //Obtain the sheetNames of the XLSX file
@@ -19,3 +17,5 @@ const parseWorkBook = (excelElements) => {
     // Since we only have one sheet, we parse the sheet to a JSON File.
     return utils.sheet_to_json(excelElements.Sheets[sheetNames[0]]);
 }
+
+export default readExcelFile;
