@@ -1,33 +1,34 @@
-import * as React from 'react';
+import _ from 'lodash';
+
+import React, { useEffect, useState, useLayoutEffect } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import SecondTest from './PDFViewer/SecondTest';
+import PDFViewer from './PDFViewer/PDFViewer';
 import JSONData from './JSONViewer/JSONData';
 import loadFromExcel from './Excel/loadFromExcel';
+import LoadEmailHTML from './Email/LoadEmailHTML';
 
-
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect } from 'react';
+const LinkedInURL = "https://www.linkedin.com/in/guillermo-toloza-guzman/"
 
 const Copyright = () => {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      <Link color="inherit" href="https://www.linkedin.com/in/guillermo-toloza-guzman/">
+      <Link color="inherit" href={LinkedInURL}>
         Guillermo Toloza Guzmán
       </Link>{' '}
       {new Date().getFullYear()}
@@ -40,13 +41,34 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
-const TestComponent = () => {
-  
+const MainComponent = () => {
+  const [excelInfo, setExcelInfo] = useState([]);
+  const [currentRow, setCurrentRow] = useState(1);
 
-  useEffect(() => {
-    loadFromExcel();
+  console.log(excelInfo);
+  const checkIfMaximumRows = () => {
+    return (currentRow === excelInfo.length)
+  }
+
+  console.log(currentRow);
+  const checkIfMinimumRows = () => {
+    return (currentRow === 1)
+  }
+
+  const increaseCurrentRow = () => {
+    setCurrentRow(currentRow + 1)
+  }
+
+  const decreaseCurrentRow = () => {
+    setCurrentRow(currentRow - 1)
+  }
+
+  //We use the useLayoutEffect so we can get the data BEFORE rendering the DOM.
+  useLayoutEffect(() => {
+    loadFromExcel()
+      .then(resp => setExcelInfo(resp))
+      .catch(err => console.error(err));
   }, []);
-  
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,21 +80,30 @@ const TestComponent = () => {
         }}>
           <CameraIcon sx={{ mr: 2 }} />
             <Grid item>
-              <Button 
-                variant="contained" 
-                startIcon={<ArrowBackIcon />}
-              >
-                Previous
-              </Button>
-              <Typography variant="h6" color="inherit">
-              Record
-              </Typography>
-              <Button 
-                variant="contained" 
-                endIcon={<ArrowForwardIcon />}
-              >
-                Next
-              </Button>
+            {/* When we are at the start or at the end of the rows, we wont show the buttons. */}
+            {!checkIfMinimumRows() && (
+                <Button 
+                  variant="contained" 
+                  startIcon={<ArrowBackIcon />}
+                  onClick={decreaseCurrentRow}
+                >
+                  Previous
+                </Button>
+              )}
+              {!_.isEmpty(excelInfo) && (
+                <Typography variant="h6" color="inherit">
+                {currentRow}: {excelInfo[currentRow - 1].c_ID} - {excelInfo[currentRow - 1].c_name} 
+                </Typography>
+              )}
+              {!checkIfMaximumRows() && (
+                <Button 
+                  variant="contained" 
+                  endIcon={<ArrowForwardIcon />}
+                  onClick={increaseCurrentRow}
+                >
+                  Next
+                </Button>
+              )}
             </Grid>
             <Grid 
               item
@@ -92,7 +123,6 @@ const TestComponent = () => {
           </Grid>
         </Toolbar>
       </AppBar>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: 'background.paper',
@@ -136,7 +166,14 @@ const TestComponent = () => {
                     backgroundColor: "grey"
                   }}
                 >
-                    <SecondTest />
+                    {/*
+                    <LoadEmailHTML 
+                      currentRow={currentRow}
+                    />
+                    */}
+                    <PDFViewer 
+                      currentRow={currentRow}
+                    />
                 </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -148,7 +185,9 @@ const TestComponent = () => {
                       justifyContent: "flex-start"
                     }}
                 >
-                    <JSONData/>
+                    <JSONData 
+                      currentRow={currentRow}
+                    />
                 </Card>
             </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -166,30 +205,6 @@ const TestComponent = () => {
              /* With the xs, sm and md, we define the responsive size of every card item 
                 identified with its key. */
               <Grid item key={card} xs={12} sm={6} md={4}>
-                {/* 
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-                */}
               </Grid>
             ))}
           </Grid>
@@ -214,4 +229,4 @@ const TestComponent = () => {
   );
 }
 
-export default TestComponent;
+export default MainComponent;

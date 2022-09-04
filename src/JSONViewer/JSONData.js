@@ -1,19 +1,18 @@
-import _ from 'lodash';
-
 import React, { useEffect, useState } from "react";
-
 import { JsonToTable } from "react-json-to-table";
 import { Grid } from "@mui/material";
 
-import ReactJson from '@textea/json-viewer'
 import DataObjectIcon from '@mui/icons-material/DataObject';
+import PropTypes from 'prop-types';
+import ReactJson from '@textea/json-viewer'
 import TableChartIcon from '@mui/icons-material/TableChart';
 
-const JSONData = () => {
+const JSONData = ({ currentRow }) => {
     const [JSON, setJSON] = useState({});
+
     useEffect(() => {
-        checkFileExist(2)
-    }, [])
+        checkFileExist(currentRow)
+    }, [currentRow])
 
     const checkFileExist = async (id) => {
         const path = `./JSONs/example_${id}.json`;
@@ -23,7 +22,7 @@ const JSONData = () => {
             setJSON(parsedJSON);
         } catch (err) {
             console.error(err)
-            return {};
+            setJSON({});
         }
       };
 
@@ -74,5 +73,9 @@ const JSONData = () => {
         </Grid>
     )
 }
+
+JSONData.propTypes = {
+    currentRow: PropTypes.number.isRequired,
+};
 
 export default JSONData;

@@ -1,0 +1,19 @@
+MIME-Version: 1.0
+Date: Sun, 4 Sep 2022 02:18:59 -0500
+Message-ID: <CALBz8Pnh1HZKE5B7wqps1wyf7GaCe+eckHgkOLduiiB2tJ-qsw@mail.gmail.com>
+Subject: THIS IS A TEST EMAIL
+From: Guillermo Toloza Guzman <gtoloza@unal.edu.co>
+To: Guillermo Toloza Guzman <gtoloza@unal.edu.co>
+Content-Type: multipart/alternative; boundary="00000000000011923505e7d4c736"
+
+--00000000000011923505e7d4c736
+Content-Type: text/plain; charset="UTF-8"
+
+For test purposes, we create a test email for the assignment
+
+--00000000000011923505e7d4c736
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr">For test purposes, we create a test email for the assignment</div>
+
+--00000000000011923505e7d4c736--

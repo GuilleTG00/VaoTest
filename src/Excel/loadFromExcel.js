@@ -7,7 +7,6 @@ const readExcelFile = async () => {
         .then(resp => resp.arrayBuffer())
         .then(buffer => read(buffer))
         .catch(err => console.error(err))
-        console.log("testing", parseWorkBook(workBook))
     return parseWorkBook(workBook);
 }
 

@@ -1,16 +1,18 @@
+
 import _ from 'lodash';
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { Grid } from '@mui/material';
 
-//import samplePDF from './Example_1.pdf';
+import PropTypes from 'prop-types';
+
 import CustomNavigation from './Navigation/CustomNavigation';
  
-
 const VIEWER_MIN_SCALE = 1;
 const VIEWER_MAX_SCALE = 5;
-const TestCase = () => {
+
+const PDFViewer = ({ currentRow }) => {
     const [PDF, setPDF] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -38,8 +40,8 @@ const TestCase = () => {
     
       //We use useEffect after DOM mutations
     useEffect(() =>{
-        checkFileExist(1);
-    }, []);
+        checkFileExist(currentRow);
+    }, [currentRow]);
 
     useEffect(() => {
         const widthValue = refPDFContainer.current.offsetWidth;
@@ -96,4 +98,8 @@ const TestCase = () => {
     );
 }
 
-export default TestCase;
+PDFViewer.propTypes = {
+    currentRow: PropTypes.string.isRequired,
+};
+
+export default PDFViewer;
