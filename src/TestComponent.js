@@ -18,9 +18,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import SecondTest from './PDFViewer/SecondTest';
 import JSONData from './JSONViewer/JSONData';
+import loadFromExcel from './Excel/loadFromExcel';
 
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useEffect } from 'react';
 
 const Copyright = () => {
   return (
@@ -39,6 +41,13 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
 
 const TestComponent = () => {
+  
+
+  useEffect(() => {
+    loadFromExcel();
+  }, []);
+  
+
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="relative">

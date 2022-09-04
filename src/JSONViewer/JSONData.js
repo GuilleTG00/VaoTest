@@ -15,11 +15,12 @@ const JSONData = () => {
         checkFileExist(2)
     }, [])
 
-    const checkFileExist = (id) => {
-        const path = `./example_${id}.json`;
+    const checkFileExist = async (id) => {
+        const path = `./JSONs/example_${id}.json`;
         try {
-            setJSON(require(`${path}`));
-            return require(`${path}`);
+            const parsedJSON = await fetch(path)
+                .then(resp => resp.json())
+            setJSON(parsedJSON);
         } catch (err) {
             console.error(err)
             return {};

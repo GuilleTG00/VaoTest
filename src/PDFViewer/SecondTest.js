@@ -4,14 +4,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { Grid } from '@mui/material';
 
-import samplePDF from './Example_1.pdf';
+//import samplePDF from './Example_1.pdf';
 import CustomNavigation from './Navigation/CustomNavigation';
  
 
 const VIEWER_MIN_SCALE = 1;
 const VIEWER_MAX_SCALE = 5;
 const TestCase = () => {
-    const [PDF, setPDF] = useState(samplePDF);
+    const [PDF, setPDF] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [scale, setScale] = useState(VIEWER_MIN_SCALE);
@@ -22,10 +22,15 @@ const TestCase = () => {
 
     const onDocumentLoadSuccess = ({ numPages }) => setTotalPages(numPages);
 
-    const checkFileExist = (id) => {
-        const path = `./Example_${id}.pdf`;
+    const checkFileExist = async (id) => {
+
+        const path = `./PDFs/example_${id}.pdf`;
         try {
-        setPDF(require(`${path}`))
+            // Our response here is a BLOB, mainly for Binary Large Objects
+            // Accepting media files, in this case, a PDF file.
+            const parsedJSON = await fetch(path)
+                .then(resp => resp.blob())
+            setPDF(parsedJSON);
         } catch (err) {
          return null;
         }
