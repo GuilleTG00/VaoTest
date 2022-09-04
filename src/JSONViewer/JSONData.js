@@ -1,14 +1,16 @@
+import _ from 'lodash';
+
 import React, { useEffect, useState } from "react";
 
+import { JsonToTable } from "react-json-to-table";
 import { Grid } from "@mui/material";
+
+import ReactJson from '@textea/json-viewer'
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import TableChartIcon from '@mui/icons-material/TableChart';
 
-import ReactJson from '@textea/json-viewer'
-
 const JSONData = () => {
     const [JSON, setJSON] = useState({});
-
     useEffect(() => {
         checkFileExist(2)
     }, [])
@@ -31,7 +33,6 @@ const JSONData = () => {
             flexDirection="column"
             justifyContent="flex-start"
             textAlign="left"
-            xs={12}
         >
             <Grid item>
                 <Grid 
@@ -67,6 +68,7 @@ const JSONData = () => {
                         Table viewer for JSON:
                     </b>
                 </Grid>
+                <JsonToTable json={JSON}/>
             </Grid>
         </Grid>
     )

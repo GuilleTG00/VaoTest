@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { Grid } from '@mui/material';
 
@@ -20,33 +20,20 @@ const TestCase = () => {
     // Reference to modify the PDF width Value to its container.
     const refPDFContainer = useRef(0)
 
-    console.log("LETS VALIDATE", refPDFContainer);
-
     const onDocumentLoadSuccess = ({ numPages }) => setTotalPages(numPages);
 
     const checkFileExist = (id) => {
         const path = `./Example_${id}.pdf`;
         try {
         setPDF(require(`${path}`))
-         return require(`${path}`);
         } catch (err) {
          return null;
         }
       };
     
-      //We use the useLayoutEffect before DOM mutations
-/*  
-      useLayoutEffect(() => {
-        const widthValue = refPDFContainer.current.clientWidth;
-        
-      })
-*/
-
       //We use useEffect after DOM mutations
     useEffect(() =>{
-        const validation = checkFileExist(1);
-        console.log(validation);
-        //setPDF(validation);
+        checkFileExist(1);
     }, []);
 
     useEffect(() => {
@@ -54,7 +41,7 @@ const TestCase = () => {
         if (!_.isNil(widthValue)) {
             setWidth(widthValue);
         }
-    }, [])
+    }, [refPDFContainer.current.offsetWidth])
     
     return (
         <div>

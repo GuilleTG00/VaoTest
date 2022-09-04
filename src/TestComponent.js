@@ -48,27 +48,39 @@ const TestComponent = () => {
           flexDirection: 'row',
         }}>
           <CameraIcon sx={{ mr: 2 }} />
-            <Grid item
-            >
-            <Button 
-              variant="contained" 
-              startIcon={<ArrowBackIcon />}
-            >
-              Previous
-            </Button>
-            <Typography variant="h6" color="inherit">
-            Record
-            </Typography>
-            <Button 
-              variant="contained" 
-              endIcon={<ArrowForwardIcon />}
-            >
-              Next
-            </Button>
+            <Grid item>
+              <Button 
+                variant="contained" 
+                startIcon={<ArrowBackIcon />}
+              >
+                Previous
+              </Button>
+              <Typography variant="h6" color="inherit">
+              Record
+              </Typography>
+              <Button 
+                variant="contained" 
+                endIcon={<ArrowForwardIcon />}
+              >
+                Next
+              </Button>
             </Grid>
-          <Typography variant="h6" color="inherit" noWrap>
-            Album layout
-          </Typography>
+            <Grid 
+              item
+            >
+              <Button 
+                variant="contained"
+                color="success"
+              >
+                Approve
+              </Button>
+              <Button 
+                variant="contained"
+                color="warning"
+              >
+                Skip
+              </Button>
+          </Grid>
         </Toolbar>
       </AppBar>
         {/* Hero unit */}

@@ -19,7 +19,6 @@ const CustomNextButton = ({
 );
 
 CustomNextButton.propTypes = {
-  classes: PropTypes.shape().isRequired,
   handleNextButton: PropTypes.func.isRequired,
 };
 
