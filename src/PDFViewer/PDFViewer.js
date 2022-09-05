@@ -11,7 +11,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import CustomNavigation from './Navigation/CustomNavigation';
  
 const VIEWER_MIN_SCALE = 1;
-const VIEWER_MAX_SCALE = 5;
+const VIEWER_MAX_SCALE = 2;
 
 const PDFViewer = ({ currentRow, isInput }) => {
     const [PDF, setPDF] = useState(null);
@@ -22,8 +22,8 @@ const PDFViewer = ({ currentRow, isInput }) => {
 
     const pdfMessage = () => {
         return isInput 
-            ? "PDF Input Viewer"
-            : "PDF Output Viewer";
+            ? "PDF Input Viewer:"
+            : "PDF Output Viewer:";
     }
 
     const inputOutputFile = () => {

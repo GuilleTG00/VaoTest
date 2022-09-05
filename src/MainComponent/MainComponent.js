@@ -6,17 +6,20 @@ import React, { useState, useLayoutEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
-import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import Snackbar from '@mui/material/Snackbar';
+import Stack from '@mui/material/Stack';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+
 
 import JSONData from '../JSONViewer/JSONData';
 import LoadEmailHTML from '../Email/LoadEmailHTML';
@@ -49,6 +52,25 @@ const theme = createTheme();
 const MainComponent = () => {
   const [excelInfo, setExcelInfo] = useState([]);
   const [currentRow, setCurrentRow] = useState(1);
+  const [approved, setApproved] = useState(false);
+  const [skipped, setSkipped] = useState(false);
+
+  const handleApprove = () => {
+    setApproved(true);
+  } 
+
+  const handleSkipped = () => {
+    setSkipped(true);
+  } 
+
+  const onCloseSkipped = () => {
+    setSkipped(false);
+  }
+
+  const onCloseApproved = () => {
+    setApproved(false);
+  }
+
 
   const checkIfMaximumRows = () => {
     return (currentRow === excelInfo.length)
@@ -59,11 +81,11 @@ const MainComponent = () => {
   }
 
   const increaseCurrentRow = () => {
-    setCurrentRow(currentRow + 1)
+    setCurrentRow(currentRow + 1);
   }
 
   const decreaseCurrentRow = () => {
-    setCurrentRow(currentRow - 1)
+    setCurrentRow(currentRow - 1);
   }
 
   //We use the useLayoutEffect so we can get the data BEFORE rendering the DOM.
@@ -77,8 +99,10 @@ const MainComponent = () => {
     <ThemeProvider theme={theme}>
       <AppBar position="relative">
         <Toolbar className="toolbarStyle">
-          <CameraIcon sx={{ mr: 2 }} />
-            <Grid item>
+          <AssignmentIcon sx={{ mr: 2 }} />
+            <Grid item
+              className="innerElementToolbar"
+            >
             {/* When we are at the start or at the end of the rows, we wont show the buttons. */}
             {!checkIfMinimumRows() && (
                 <Button 
@@ -94,7 +118,9 @@ const MainComponent = () => {
                   variant="h6" 
                   color="inherit"
                 >
-                  {currentRow}: {excelInfo[currentRow - 1].c_ID} - {excelInfo[currentRow - 1].c_name} 
+                  Record {currentRow} of {excelInfo.length}:
+                  {' '}
+                  {excelInfo[currentRow - 1].c_ID} - {excelInfo[currentRow - 1].c_name} 
                 </Typography>
               )}
               {!checkIfMaximumRows() && (
@@ -107,22 +133,36 @@ const MainComponent = () => {
                 </Button>
               )}
             </Grid>
-            <Grid 
-              item
-            >
-              <Button 
+            <Stack direction="row" spacing={1}>
+              <Button
                 variant="contained"
                 color="success"
+                onClick={handleApprove}
               >
                 Approve
               </Button>
+              <Snackbar
+                open={approved}
+                autoHideDuration={5000}
+                onClose={onCloseApproved}
+                color="inherit"
+                message="Record Approved"
+              />
               <Button 
                 variant="contained"
                 color="warning"
+                onClick={handleSkipped}
               >
                 Skip
               </Button>
-          </Grid>
+              <Snackbar
+                open={skipped}
+                onClose={onCloseSkipped}
+                autoHideDuration={5000}
+                color="blue"
+                message="Record skipped"
+              />
+          </Stack>
         </Toolbar>
       </AppBar>
         <Box

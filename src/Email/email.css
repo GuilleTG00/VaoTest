@@ -1,9 +1,10 @@
 .article {
     text-align: center !important;
+    padding-bottom: 10%;
 }
 
 .article img {
-    width: 80%;
+    width: 70%;
 }
 
 .emailText {
