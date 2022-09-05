@@ -15,7 +15,7 @@ const JSONData = ({ currentRow }) => {
     }, [currentRow])
 
     const checkFileExist = async (id) => {
-        const path = `./JSONs/example_${id}.json`;
+        const path = `./JSONs/json_example_${id}.json`;
         try {
             const parsedJSON = await fetch(path)
                 .then(resp => resp.json())

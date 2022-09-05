@@ -1,0 +1,13 @@
+.cardStyle {
+    padding: 0%;
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.toolbarStyle {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+      
+}

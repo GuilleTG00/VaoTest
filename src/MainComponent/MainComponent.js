@@ -1,15 +1,15 @@
+import './MainComponent.css'
+
 import _ from 'lodash';
 
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -18,26 +18,31 @@ import Link from '@mui/material/Link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import PDFViewer from './PDFViewer/PDFViewer';
-import JSONData from './JSONViewer/JSONData';
-import loadFromExcel from './Excel/loadFromExcel';
-import LoadEmailHTML from './Email/LoadEmailHTML';
+import JSONData from '../JSONViewer/JSONData';
+import LoadEmailHTML from '../Email/LoadEmailHTML';
+import loadFromExcel from '../Excel/loadFromExcel';
+import PDFViewer from '../PDFViewer/PDFViewer';
 
 const LinkedInURL = "https://www.linkedin.com/in/guillermo-toloza-guzman/"
 
 const Copyright = () => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      <Link color="inherit" href={LinkedInURL}>
+    <Typography 
+      variant="body2" 
+      color="text.secondary" 
+      align="center"
+    >
+      <Link 
+        color="inherit" 
+        href={LinkedInURL}
+      >
         Guillermo Toloza Guzmán
-      </Link>{' '}
+      </Link>{' - '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
@@ -45,12 +50,10 @@ const MainComponent = () => {
   const [excelInfo, setExcelInfo] = useState([]);
   const [currentRow, setCurrentRow] = useState(1);
 
-  console.log(excelInfo);
   const checkIfMaximumRows = () => {
     return (currentRow === excelInfo.length)
   }
 
-  console.log(currentRow);
   const checkIfMinimumRows = () => {
     return (currentRow === 1)
   }
@@ -73,11 +76,7 @@ const MainComponent = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="relative">
-        <Toolbar sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-        }}>
+        <Toolbar className="toolbarStyle">
           <CameraIcon sx={{ mr: 2 }} />
             <Grid item>
             {/* When we are at the start or at the end of the rows, we wont show the buttons. */}
@@ -91,8 +90,11 @@ const MainComponent = () => {
                 </Button>
               )}
               {!_.isEmpty(excelInfo) && (
-                <Typography variant="h6" color="inherit">
-                {currentRow}: {excelInfo[currentRow - 1].c_ID} - {excelInfo[currentRow - 1].c_name} 
+                <Typography 
+                  variant="h6" 
+                  color="inherit"
+                >
+                  {currentRow}: {excelInfo[currentRow - 1].c_ID} - {excelInfo[currentRow - 1].c_name} 
                 </Typography>
               )}
               {!checkIfMaximumRows() && (
@@ -125,9 +127,8 @@ const MainComponent = () => {
       </AppBar>
         <Box
           sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
+            paddingTop: 5,
+            paddingBottom: 5,
           }}
         >
           <Container maxWidth="sm">
@@ -135,22 +136,17 @@ const MainComponent = () => {
               component="h1"
               variant="h2"
               align="center"
-              color="text.primary"
-              gutterBottom
+              color="black"
             >
               Main Mockup
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              VAO.WORLD TEST
-            </Typography>
-            <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="center"
+            <Typography 
+              variant="h5" 
+              align="center" 
+              color="text.secondary" 
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack>
+              VAO.WORLD Assignment
+            </Typography>
           </Container>
         </Box>
         { /* We define a maxWidth of XL size, so it can fit the entire screen. */}
@@ -159,31 +155,20 @@ const MainComponent = () => {
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ 
-                    height: '100%', 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    backgroundColor: "grey"
-                  }}
+                  className='cardStyle'
                 >
-                    {/*
                     <LoadEmailHTML 
                       currentRow={currentRow}
                     />
-                    */}
                     <PDFViewer 
                       currentRow={currentRow}
+                      isInput
                     />
                 </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
                 <Card
-                    sx={{ 
-                      padding: '0%', 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      justifyContent: "flex-start"
-                    }}
+                  className='cardStyle'
                 >
                     <JSONData 
                       currentRow={currentRow}
@@ -192,35 +177,30 @@ const MainComponent = () => {
             </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+              className='cardStyle'
             >
-                <CardMedia
-                    component="img"
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                />
+              <PDFViewer 
+                currentRow={currentRow}
+                isInput={false}
+              />
             </Card>
           </Grid>
-            {cards.map((card) => (
-             /* With the xs, sm and md, we define the responsive size of every card item 
-                identified with its key. */
-              <Grid item key={card} xs={12} sm={6} md={4}>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        </Grid>
+      </Container>
       {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
+      <Box 
+        sx={{ 
+          padding: 6 
+        }} 
+        component="footer"
+      >
         <Typography
           variant="subtitle1"
           align="center"
           color="text.secondary"
           component="p"
         >
-          Test Assignmnent solution for VAO.WORLD by:
+          Test Assignment solution for VAO.WORLD by:
         </Typography>
         <Copyright />
       </Box>

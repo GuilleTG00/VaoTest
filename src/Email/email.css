@@ -1,3 +1,13 @@
-.article img{
-    width: 100% !important;
+.article {
+    text-align: center !important;
+}
+
+.article img {
+    width: 80%;
+}
+
+.emailText {
+    color: "blue"; 
+    padding-left: "2%"; 
+    padding-bottom: "5%";
 }

@@ -7,17 +7,30 @@ import { Grid } from '@mui/material';
 
 import PropTypes from 'prop-types';
 
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import CustomNavigation from './Navigation/CustomNavigation';
  
 const VIEWER_MIN_SCALE = 1;
 const VIEWER_MAX_SCALE = 5;
 
-const PDFViewer = ({ currentRow }) => {
+const PDFViewer = ({ currentRow, isInput }) => {
     const [PDF, setPDF] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [scale, setScale] = useState(VIEWER_MIN_SCALE);
     const [width, setWidth] = useState(0);
+
+    const pdfMessage = () => {
+        return isInput 
+            ? "PDF Input Viewer"
+            : "PDF Output Viewer";
+    }
+
+    const inputOutputFile = () => {
+        return isInput
+            ?   'input'
+            :   'output';
+    }
 
     // Reference to modify the PDF width Value to its container.
     const refPDFContainer = useRef(0)
@@ -26,7 +39,8 @@ const PDFViewer = ({ currentRow }) => {
 
     const checkFileExist = async (id) => {
 
-        const path = `./PDFs/example_${id}.pdf`;
+        const inputOutputText = inputOutputFile();
+        const path = `./PDFs/pdf_${inputOutputText}_${id}.pdf`;
         try {
             // Our response here is a BLOB, mainly for Binary Large Objects
             // Accepting media files, in this case, a PDF file.
@@ -57,17 +71,31 @@ const PDFViewer = ({ currentRow }) => {
                 className="pdfContainer"
                 sm={12} md={12} xs={12}
             >
+                <Grid 
+                    item
+                    paddingBottom={2}
+                    textAlign="left"
+                >
+                    <PictureAsPdfIcon fontSize="large"/>
+                    <b style={{
+                        color: "blue", 
+                        paddingLeft: "1%"
+                       }}
+                    >
+                        {pdfMessage()}
+                    </b>
+                </Grid>
                 <div ref={refPDFContainer}>
                     <Document
                         className="canvasCss"
                         file={PDF}
-                        loading=""
+                        loading="Loading PDF"
                         onLoadSuccess={onDocumentLoadSuccess}
                         renderMode="canvas"
                     >
                         <Page
                             className="pageContainer"
-                            loading=""
+                            loading="Loading PDF"
                             pageNumber={currentPage}
                             renderAnnotationLayer={false}
                             renderTextLayer={false}
@@ -99,7 +127,7 @@ const PDFViewer = ({ currentRow }) => {
 }
 
 PDFViewer.propTypes = {
-    currentRow: PropTypes.string.isRequired,
+    currentRow: PropTypes.number.isRequired,
 };
 
 export default PDFViewer;
