@@ -85,7 +85,11 @@ const PDFViewer = ({ currentRow, isInput }) => {
                         {pdfMessage()}
                     </b>
                 </Grid>
-                <div ref={refPDFContainer}>
+                <div 
+                style={{
+                    overflow: "auto"
+                }}
+                ref={refPDFContainer}>
                     <Document
                         className="canvasCss"
                         file={PDF}
